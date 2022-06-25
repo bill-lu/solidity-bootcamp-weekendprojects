@@ -24,10 +24,10 @@ describe("Ballot", function () {
 
   beforeEach(async function () {
     accounts = await ethers.getSigners();
-    const ballotFactory = await ethers.getContractFactory("Ballot");
-    ballotContract = await ballotFactory.deploy(
+    const ballotFactory = (await ethers.getContractFactory("Ballot"));
+    ballotContract = (await ballotFactory.deploy(
       convertStringArrayToBytes32(PROPOSALS)
-    );
+    )) as Ballot;
     await ballotContract.deployed();
   });
 
@@ -62,6 +62,12 @@ describe("Ballot", function () {
   describe("when the chairperson interacts with the giveRightToVote function in the contract", function () {
     it("gives right to vote for another address", async function () {
       const voterAddress = accounts[1].address;
+      // connect to use different account
+      /*
+      const tx = await ballotContract
+        .connect(accounts[1])      
+        .giveRightToVote(voterAddress);
+      */
       const tx = await ballotContract.giveRightToVote(voterAddress);
       await tx.wait();
       const voter = await ballotContract.voters(voterAddress);
@@ -86,70 +92,70 @@ describe("Ballot", function () {
     });
   });
 
-  describe("when the voter interact with the vote function in the contract", function () {
+  describe("1. when the voter interact with the vote function in the contract", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when the voter interact with the delegate function in the contract", function () {
+  describe("2. when the voter interact with the delegate function in the contract", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when the an attacker interact with the giveRightToVote function in the contract", function () {
+  describe("3. when the an attacker interact with the giveRightToVote function in the contract", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when the an attacker interact with the vote function in the contract", function () {
+  describe("4. when the an attacker interact with the vote function in the contract", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when the an attacker interact with the delegate function in the contract", function () {
+  describe("5. when the an attacker interact with the delegate function in the contract", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when someone interact with the winningProposal function before any votes are cast", function () {
+  describe("6. when someone interact with the winningProposal function before any votes are cast", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when someone interact with the winningProposal function after one vote is cast for the first proposal", function () {
+  describe("7. when someone interact with the winningProposal function after one vote is cast for the first proposal", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when someone interact with the winnerName function before any votes are cast", function () {
+  describe("8. when someone interact with the winnerName function before any votes are cast", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when someone interact with the winnerName function after one vote is cast for the first proposal", function () {
+  describe("9. when someone interact with the winnerName function after one vote is cast for the first proposal", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });
   });
 
-  describe("when someone interact with the winningProposal function and winnerName after 5 random votes are cast for the proposals", function () {
+  describe("10. when someone interact with the winningProposal function and winnerName after 5 random votes are cast for the proposals", function () {
     // TODO
     it("is not implemented", async function () {
       throw new Error("Not implemented");

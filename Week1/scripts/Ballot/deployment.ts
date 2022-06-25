@@ -32,6 +32,7 @@ async function main() {
   console.log("Deploying Ballot contract");
   console.log("Proposals: ");
   const proposals = process.argv.slice(2);
+  console.log({args: process.argv, proposals: proposals});
   if (proposals.length < 2) throw new Error("Not enough proposals provided");
   proposals.forEach((element, index) => {
     console.log(`Proposal N. ${index + 1}: ${element}`);
