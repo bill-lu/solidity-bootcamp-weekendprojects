@@ -94,7 +94,7 @@ contract Ballot {
         Voter storage delegate_ = voters[to];
 
         // Voters cannot delegate to wallets that cannot vote.
-        require(delegate_.weight >= 1);
+        require(delegate_.weight >= 1, "Delegate no right to vote");
         sender.voted = true;
         sender.delegate = to;
         if (delegate_.voted) {
@@ -139,6 +139,8 @@ contract Ballot {
     // of the winner contained in the proposals array and then
     // returns the name of the winner
     function winnerName() external view returns (bytes32 winnerName_) {
+        uint256 winningVoteCount = proposals[winningProposal()].voteCount;
+        require(winningVoteCount > 0, "Check result before anyone votes" );
         winnerName_ = proposals[winningProposal()].name;
     }
 }

@@ -15,7 +15,9 @@ async function main() {
       ? ethers.Wallet.fromMnemonic(process.env.MNEMONIC)
       : new ethers.Wallet(process.env.PRIVATE_KEY ?? EXPOSED_KEY);
   console.log(`Using address ${wallet.address}`);
+  
   const provider = ethers.providers.getDefaultProvider("rinkeby");
+  
   const signer = wallet.connect(provider);
   const balanceBN = await signer.getBalance();
   const balance = Number(ethers.utils.formatEther(balanceBN));
@@ -23,6 +25,7 @@ async function main() {
   if (balance < 0.01) {
     throw new Error("Not enough ether");
   }
+  
   if (process.argv.length < 3) throw new Error("Ballot address missing");
   const ballotAddress = process.argv[2];
 
@@ -31,10 +34,18 @@ async function main() {
     ballotJson.abi,
     signer
   ) as Ballot;
+  
   console.log(`Query voting result ... `);
-  const winningProposal = await ballotContract.winnerName();
-  const winningProposalName = ethers.utils.parseBytes32String(winningProposal);
-  console.log(`Winning proposal: ${winningProposalName}`);
+  try {
+    const winningProposal = await ballotContract.winnerName();
+    const winningProposalName = ethers.utils.parseBytes32String(winningProposal);
+    console.log(`Winning proposal: ${winningProposalName}`);
+  } catch (err: unknown) {
+    if ( err instanceof Error && err.message.includes("Check result before anyone votes"))
+    {
+      console.log("Check result before anyone votes");
+    }
+  }
 }
 
 main().catch((error) => {
