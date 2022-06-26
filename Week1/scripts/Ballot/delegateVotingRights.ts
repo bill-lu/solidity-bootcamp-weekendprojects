@@ -1,19 +1,13 @@
-import { ethers } from "ethers";
+import { Contract, ethers } from "ethers";
 import "dotenv/config";
 import * as ballotJson from "../../artifacts/contracts/Ballot.sol/Ballot.json";
+// eslint-disable-next-line node/no-missing-import
+import { Ballot } from "../../typechain";
 
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
 const EXPOSED_KEY =
   "8da4ef21b864d2cc526dbdb2a120bd2874c36c9d0a1fb7f8c63d7f7a8b41de8f";
-
-function convertStringArrayToBytes32(array: string[]) {
-  const bytes32Array = [];
-  for (let index = 0; index < array.length; index++) {
-    bytes32Array.push(ethers.utils.formatBytes32String(array[index]));
-  }
-  return bytes32Array;
-}
 
 async function main() {
   const wallet =
@@ -29,27 +23,30 @@ async function main() {
   if (balance < 0.01) {
     throw new Error("Not enough ether");
   }
-  console.log("Deploying Ballot contract");
-  console.log("Proposals: ");
-  const proposals = process.argv.slice(2);
-  //const proposals = ["Solana", "Algorand", "Ethereum", "Polygon", "Bitcoin"];
-  console.log({args: process.argv, proposals: proposals});
-  if (proposals.length < 2) throw new Error("Not enough proposals provided");
-  proposals.forEach((element, index) => {
-    console.log(`Proposal N. ${index + 1}: ${element}`);
-  });
-  const ballotFactory = new ethers.ContractFactory(
+  if (process.argv.length < 3) throw new Error("Ballot address missing");
+  const ballotAddress = process.argv[2];
+  if (process.argv.length < 4) throw new Error("Delegate to address missing");
+  const delegateToAddress = process.argv[3];
+  console.log(
+    `Attaching ballot contract interface to address ${ballotAddress}`
+  );
+  const ballotContract: Ballot = new Contract(
+    ballotAddress,
     ballotJson.abi,
-    ballotJson.bytecode,
     signer
-  );
-  const ballotContract = await ballotFactory.deploy(
-    convertStringArrayToBytes32(proposals)
-  );
+  ) as Ballot;
+  const currentVoter = await ballotContract.voters(signer.address);
+  if (currentVoter.voted)
+    throw new Error("Caller already voted");
+  
+  const delegateToVoter = await ballotContract.voters(delegateToAddress);
+  if (delegateToVoter.weight.toNumber() !== 1)
+    throw new Error("DelegateTo user doesn't have right to vote");
+  console.log(`Delegate vote to ${delegateToAddress}`);
+  const tx = await ballotContract.delegate(delegateToAddress);
   console.log("Awaiting confirmations");
-  await ballotContract.deployed();
-  console.log("Completed");
-  console.log(`Contract deployed at ${ballotContract.address}`);
+  await tx.wait();
+  console.log(`Transaction completed. Hash: ${tx.hash}`);
 }
 
 main().catch((error) => {
