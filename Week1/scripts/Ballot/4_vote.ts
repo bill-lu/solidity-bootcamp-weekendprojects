@@ -23,7 +23,7 @@ async function main() {
   if (balance < 0.01) {
     throw new Error("Not enough ether");
   }
-  console.log(process.argv);
+  //console.log(process.argv);
   if (process.argv.length < 3) throw new Error("Ballot address missing");
   const ballotAddress = process.argv[2];
   if (process.argv.length < 4) throw new Error("Proposal missing");

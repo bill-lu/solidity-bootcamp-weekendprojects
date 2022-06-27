@@ -33,7 +33,7 @@ async function main() {
   console.log("Proposals: ");
   const proposals = process.argv.slice(2);
   //const proposals = ["Solana", "Algorand", "Ethereum", "Polygon", "Bitcoin"];
-  console.log({args: process.argv, proposals: proposals});
+  //console.log({args: process.argv, proposals: proposals});
   if (proposals.length < 2) throw new Error("Not enough proposals provided");
   proposals.forEach((element, index) => {
     console.log(`Proposal N. ${index + 1}: ${element}`);
