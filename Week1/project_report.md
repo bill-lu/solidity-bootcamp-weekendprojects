@@ -20,18 +20,26 @@ https://rinkeby.etherscan.io/address/0x9be7ea381d0759dfb295b7922f0e32fce121104f
 ### 1. Deployment the contract
 ```
 AP-BillLu:Week1 billlu$ yarn hardhat compile
+
 yarn run v1.22.15
+
 warning ../../../../../package.json: No license field
+
 $ /Users/billlu/Projects/Blockchains/solidity-bootcamp/solidity-bootcamp-weekendprojects/Week1/node_modules/.bin/hardhat compile
 Nothing to compile
+
 No need to generate any newer typings.
+
 ✨  Done in 4.18s.
 AP-BillLu:Week1 billlu$ yarn ts-node ./scripts/Ballot/1_deployment.ts Solana Ethereum Algorand Polygon Bitcoin
+
 yarn run v1.22.15
 warning ../../../../../package.json: No license field
 $ /Users/billlu/Projects/Blockchains/solidity-bootcamp/solidity-bootcamp-weekendprojects/Week1/node_modules/.bin/ts-node ./scripts/Ballot/1_deployment.ts Solana Ethereum Algorand Polygon Bitcoin
+
 Using address 0xB37a6e80c1acE46bEfe6CCA3A00E16655C14a6d3
 Wallet balance 3.390425666444232
+
 Deploying Ballot contract
 Proposals: 
 Proposal N. 1: Solana
@@ -57,6 +65,8 @@ Contract deployed at 0x9be7ea381d0759Dfb295b7922f0e32Fce121104F
 ✨  Done in 23.01s.
 AP-BillLu:Week1 billlu$ 
 ```
+
+
 ### 2. Query the proposals
 ```
 AP-BillLu:Week1 billlu$ yarn ts-node ./scripts/Ballot/2_queryProposals.ts 0x9be7ea381d0759Dfb295b7922f0e32Fce121104F
@@ -75,6 +85,8 @@ Proposal 5  -- name: Bitcoin, voteCount: 0
 AP-BillLu:Week1 billlu$ 
 
 ```
+
+
 ### 3. Query voting result (before anyone votes)
 ```
 AP-BillLu:Week1 billlu$ yarn ts-node ./scripts/Ballot/6_queryVotingResult.ts   0x9be7ea381d0759Dfb295b7922f0e32Fce121104F
@@ -87,6 +99,8 @@ Query voting result ...
 Check result before anyone votes
 ✨  Done in 3.29s.
 AP-BillLu:Week1 billlu$ 
+
+
 
 ```
 ### 4. Cast a vote before given vote right
@@ -146,6 +160,7 @@ error Command failed with exit code 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 AP-BillLu:Week1 billlu$ 
 
+
 ```
 ### 6. Give vote right
 ```
@@ -173,6 +188,7 @@ Awaiting confirmations
 Transaction completed. Hash: 0x6583f6be455bc12fda7889343f496be65f1496102ed09c7600d52f1cc021b830
 ✨  Done in 23.27s.
 AP-BillLu:Week1 billlu$ 
+
 
 ```
 ### 7. Delegate to a voter with vote right
@@ -202,6 +218,8 @@ Transaction completed. Hash: 0x958a876e3eb96f45469061755b4d792e1a248582b7431eb59
 ✨  Done in 16.96s.
 AP-BillLu:Week1 billlu$ 
 
+
+
 ```
 ### 8. Cast a vote
 ```
@@ -229,6 +247,8 @@ Awaiting confirmations
 Transaction completed. Hash: 0x8b0349c59a695a4dd807ccbfa98f7cef8dbe07c05e1cf42de61bfe46a7d7f3cc
 ✨  Done in 395.38s.
 
+
+
 ```
 ### 9. Cast a vote second time
 ```
@@ -245,6 +265,8 @@ Error: Voter has already voted
 error Command failed with exit code 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 AP-BillLu:Week1 billlu$ 
+
+
 
 ```
 ### 10. Delete to another voter after voted for proposal
@@ -274,6 +296,8 @@ Error: Caller already voted
 error Command failed with exit code 1.
 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
 AP-BillLu:Week1 billlu$ 
+
+
 
 ```
 ### 11. Quering voting result
