@@ -56,6 +56,14 @@ async function main() {
   console.log(`Account ${0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266} has ${await TokenContract.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")} tokens`);
   
   
+  console.log("Delegating");
+  const delegateTx = await TokenContract.connect("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266").delegate("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+  await delegateTx.wait();
+
+  const postDelegateVotePower = await TokenContract.getVotes("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+  
+  
+  
   const ballotFactory = new ethers.ContractFactory(
     ballotJson.abi,
     ballotJson.bytecode, 
