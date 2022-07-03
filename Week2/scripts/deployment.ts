@@ -48,6 +48,14 @@ async function main() {
   console.log(`MyToken Contract deployed at ${TokenContract.address}`);
   console.log("======Deploying Custom Ballot contract======");
 
+  const mintTx = await TokenContract.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18))
+  );
+  await mintTx.wait();
+
+  console.log(`Account ${0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266} has ${await TokenContract.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")} tokens`);
+  
+  
   const ballotFactory = new ethers.ContractFactory(
     ballotJson.abi,
     ballotJson.bytecode, 
