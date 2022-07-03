@@ -25,13 +25,15 @@ async function getSinger(
     let accountAddress = "";
     switch (accountIndex)
     {
-        case 1: return process.env.ACCOUNT_1; break;
-        case 2: return process.env.ACCOUNT_2; break;
-        case 3: return process.env.ACCOUNT_3; break;
-        case 4: return process.env.ACCOUNT_4; break;
-        case 5: return process.env.ACCOUNT_5; break;
-        default: break;
+        case 1: accountAddress = process.env.ACCOUNT_1?? ""; break;
+        case 2: accountAddress = process.env.ACCOUNT_2?? ""; break;
+        case 3: accountAddress = process.env.ACCOUNT_3?? ""; break;
+        case 4: accountAddress = process.env.ACCOUNT_4?? ""; break;
+        case 5: accountAddress = process.env.ACCOUNT_5?? ""; break;
+        default: accountAddress = process.env.ACCOUNT_1?? ""; break;
     }
+
+    return accountAddress;
   }
 
   export  {getSinger, getAccountAddress};
