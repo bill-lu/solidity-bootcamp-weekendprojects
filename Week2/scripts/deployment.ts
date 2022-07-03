@@ -5,6 +5,7 @@ import * as ballotJson from "../../artifacts/contracts/CustomBallot.sol/CustomBa
 
 
 const PROPOSALS = ["Proposal 1", "Proposal 2", "Proposal 3"];
+const BASE_VOTE_POWER = 10;
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
 const EXPOSED_KEY =
