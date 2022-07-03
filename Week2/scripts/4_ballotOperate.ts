@@ -10,6 +10,7 @@ async function voteForBallot(
     proposalVoteFor: number,
     votingPowerUsed: number) 
 {
+  /*
     const ballotContract: CustomBallot = new Contract(
       ballotContractAddress,
       ballotJson.abi,
@@ -28,6 +29,7 @@ async function voteForBallot(
     console.log("Voting Power After");
     const votingPowerAfter = await ballotContract.votingPower(signer.address);
     console.log(ethers.utils.formatEther(votingPowerAfter));
+    */
   }
   
   export {voteForBallot};
