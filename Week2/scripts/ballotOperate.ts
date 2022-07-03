@@ -4,7 +4,7 @@ import "dotenv/config";
 import * as ballotJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
 import { CustomBallot } from "../typechain";
 
-async function main(
+async function voteForBallot(
     signer: ethers.Wallet, 
     ballotContractAddress: string,
     proposalVoteFor: number,
@@ -30,4 +30,4 @@ async function main(
     console.log(ethers.utils.formatEther(votingPowerAfter));
   }
   
-  export default main;
+  export {voteForBallot};
