@@ -6,6 +6,7 @@ import {MyToken, CustomBallot} from "../typechain";
 
 
 const PROPOSALS = ["Proposal 1", "Proposal 2", "Proposal 3"];
+const BASE_VOTE_POWER = 10;
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
 const EXPOSED_KEY =
@@ -59,6 +60,22 @@ async function main() {
   console.log(`MyToken Contract deployed at ${TokenContract.address}`);
   console.log("======Deploying Custom Ballot contract======");
 
+  const mintTx = await TokenContract.mint("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  ethers.utils.parseEther(BASE_VOTE_POWER.toFixed(18))
+  );
+  await mintTx.wait();
+
+  console.log(`Account ${0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266} has ${await TokenContract.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")} tokens`);
+  
+  
+  console.log("Delegating");
+  const delegateTx = await TokenContract.connect("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266").delegate("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+  await delegateTx.wait();
+
+  const postDelegateVotePower = await TokenContract.getVotes("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+  
+  
+  
   const ballotFactory = new ethers.ContractFactory(
     ballotJson.abi,
     ballotJson.bytecode, 
