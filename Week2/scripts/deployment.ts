@@ -1,7 +1,8 @@
 import { ethers, Signer } from "ethers";
 import "dotenv/config";
-import * as mytokenJson from "../../artifacts/contracts/Token.sol/MyToken.json";
-import * as ballotJson from "../../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
+import * as mytokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
+import * as ballotJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
+import {MyToken, CustomBallot} from "../typechain";
 
 
 const PROPOSALS = ["Proposal 1", "Proposal 2", "Proposal 3"];
@@ -22,10 +23,10 @@ async function main() {
   const wallet =
     process.env.MNEMONIC && process.env.MNEMONIC.length > 0
       ? ethers.Wallet.fromMnemonic(process.env.MNEMONIC)
-      : new ethers.Wallet(process.env.PRIVATE_KEY ?? EXPOSED_KEY);
+      : new ethers.Wallet(process.env.PRIVATE_KEY_1 ?? EXPOSED_KEY);
   console.log(`Using address ${wallet.address}`);
 
-  const provider = ethers.providers.getDefaultProvider("ropsten");
+  const provider = ethers.providers.getDefaultProvider("rinkeby");
   const signer = wallet.connect(provider);
   const balanceBN = await signer.getBalance();
   const balance = Number(ethers.utils.formatEther(balanceBN));
@@ -40,9 +41,19 @@ async function main() {
     mytokenJson.bytecode,
     signer
   );
-  const TokenContract = await tokenContractFactory.deploy();
+  const TokenContract = (await tokenContractFactory.deploy()) as MyToken ;
   console.log("Awaiting confirmations");
   await TokenContract.deployed();
+
+  let tokenAmt = 100
+
+  console.log("Mintng");
+  const minTx = await TokenContract.mint(signer.address, ethers.utils.parseEther(tokenAmt.toFixed(18)));
+  await minTx.wait();
+
+  console.log("Delegating");
+  const delegateTx = await TokenContract.delegate(signer.address);
+  await delegateTx.wait();
 
   console.log("Completed");
   console.log(`MyToken Contract deployed at ${TokenContract.address}`);
@@ -54,13 +65,19 @@ async function main() {
     signer
   );
 
-  const BallotContract = await ballotFactory.deploy(convertStringArrayToBytes32(PROPOSALS),
-  TokenContract.address);
+  const BallotContract = (await ballotFactory.deploy(convertStringArrayToBytes32(PROPOSALS),
+  TokenContract.address)) as CustomBallot;
   console.log("Awaiting confirmations");
   await BallotContract.deployed();
 
   console.log("Completed");
   console.log(`Custom Ballot Contract deployed at ${BallotContract.address}`);
+
+  console.log("Voting");
+  const voteTx = await BallotContract.vote(1, ethers.utils.parseEther(tokenAmt.toFixed(18)));
+  console.log(`Vote to first proposal with ${tokenAmt} Token, tx hash: ${voteTx.hash}`);
+
+  await voteTx.wait(1);
 }
 
 main().catch((error) => {
