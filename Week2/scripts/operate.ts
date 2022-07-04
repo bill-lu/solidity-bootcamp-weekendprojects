@@ -31,10 +31,11 @@ async function main()
       "rinkeby"
     );
 
+    ///*
     const tokenContractAddress = await deployTokenContract(
       ownerSigner
     );
-    // const tokenContractAddress = "0x7fc54EE184D50871f55E65f0000d471a2c25676D"
+    // const tokenContractAddress = "0x6534Da8220ABC587C334D8440Ce135200AB9108d"
     await mintAndDelegateToken(
       tokenContractAddress, 
       ownerSigner, 
@@ -48,8 +49,8 @@ async function main()
       proposals
     );
     
-    
-    //const ballotConractAddress = "0x1cf06F6eA98e48A08a4ccC2C3Dd02A08212a6F17";
+    //*/
+    //const ballotContractAddress = "0x6534Da8220ABC587C334D8440Ce135200AB9108d";
     await voteForBallot(
       secondSigner, 
       ballotContractAddress, 
@@ -57,6 +58,7 @@ async function main()
       20
     );
 
+    /*
     await voteForBallot(
       secondSigner, 
       ballotContractAddress, 
@@ -70,6 +72,7 @@ async function main()
       0, 
       30
     );
+    */
 
     await queryBallotAndGetWinner(
       ownerSigner, 
