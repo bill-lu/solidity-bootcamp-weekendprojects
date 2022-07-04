@@ -100,3 +100,49 @@ Voted for proposal 1 with 20 Token 0x1b85babbb6648b56f6bb3d2733501ae057792be2db6
 getting winner name
 winner is: Pizza
 ```
+## Ropsten Etherscan Link
+Ballot Contract: https://ropsten.etherscan.io/address/0xAD416A5892814D4Bd16686eFA76e13D4775A8E6C
+Token Contract: https://ropsten.etherscan.io/address/0x77Dc4d3463fa5055F4C58de7e953030eDad1A6CA
+
+## Scripts run on Ropsten Network
+```
+Using address 0x63FaC9201494f0bd17B9892B9fae4d52fe3BD377
+Using address 0x63FaC9201494f0bd17B9892B9fae4d52fe3BD377
+Wallet balance 0.1865789170246567
+======Deploying MyToken contract======
+========= NOTICE =========
+Request-Rate Exceeded  (this message will not be repeated)
+
+The default API keys for each service are provided as a highly-throttled,
+community resource for low-traffic projects and early prototyping.
+
+While your application will continue to function, we highly recommended
+signing up for your own API keys to improve performance, increase your
+request rate/limit and enable other perks, such as metrics and advanced APIs.
+
+For more details: https://docs.ethers.io/api-keys/
+==========================
+Awaiting confirmations
+MyToken Contract deployed at 0x77Dc4d3463fa5055F4C58de7e953030eDad1A6CA
+minting tokens
+minted 100 tokens to address 0x63FaC9201494f0bd17B9892B9fae4d52fe3BD377
+Mint transacton  0x3a07bc7b843074badce498418640ac4f76310707bfff517bb2363d7c3cc91dd1
+delegating tokens to address 0x63FaC9201494f0bd17B9892B9fae4d52fe3BD377
+delegated tokens from 0x63FaC9201494f0bd17B9892B9fae4d52fe3BD377 to 0x63FaC9201494f0bd17B9892B9fae4d52fe3BD377
+Delegate transaction 0xc29419b1da652e2d0adcb56c615f039d54d67ace8a1bd8540ec03438c52ee9ed
+Wallet balance 0.17980713249305505
+Proposals: 
+Proposal N. 1: Cake
+Proposal N. 2: Pizza
+Proposal N. 3: Soup
+Proposal N. 4: Beef
+======Deploying Ballot contract======
+Awaiting confirmations
+Completed
+Custom Ballot Contract deployed at 0xAD416A5892814D4Bd16686eFA76e13D4775A8E6C
+Voting for proposal 1
+Voted for proposal 1 with 20 Token 0xf772e5e469ee15dc57d0f3e9394a4efc35ce640385cf618d5d830ab62f775e1f
+getting winner name
+winner is: Pizza
+✨  Done in 86.05s.
+```
