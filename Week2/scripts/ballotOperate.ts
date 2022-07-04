@@ -10,24 +10,27 @@ async function voteForBallot(
     proposalVoteFor: number,
     votingPowerUsed: number) 
 {
+    console.log("Creating Ballot contract");
     const ballotContract: CustomBallot = new Contract(
       ballotContractAddress,
       ballotJson.abi,
       signer
     ) as CustomBallot;
-  
-    console.log("Voting Power before");
+    console.log("Ballot contract created");
+
+    console.log(`Getting voting power for ${signer.address} before vote`);
     const votingPower = await ballotContract.votingPower(signer.address);
-    console.log(ethers.utils.formatEther(votingPower));
-  
+    console.log(` Voting power before: ${ethers.utils.formatEther(votingPower)}`);
+ 
+    console.log()
     const voteTx = await ballotContract.vote(proposalVoteFor, ethers.utils.parseEther(votingPowerUsed.toFixed(18)));
     console.log("Vote for proposal {proposalVoteFor} with {votingPowerUsed} Token", voteTx.hash);
   
     await voteTx.wait(1);
   
-    console.log("Voting Power After");
+    console.log("Getting voting power after vote");
     const votingPowerAfter = await ballotContract.votingPower(signer.address);
-    console.log(ethers.utils.formatEther(votingPowerAfter));
+    console.log(`Voting power after: ${ethers.utils.formatEther(votingPowerAfter)}`);
   }
   
   export {voteForBallot};
