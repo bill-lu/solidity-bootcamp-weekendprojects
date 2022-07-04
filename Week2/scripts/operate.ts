@@ -6,7 +6,7 @@ import {deployTokenContract} from "./deployTokenContract";
 import {deployBallotContract} from "./deployBallotContract";
 import {mintAndDelegateToken} from "./mintAndDelegateToken";
 import {voteForBallot} from "./ballotOperate";
-//import {queryBallotAndGetWinner} from "./5_queryBallot";
+import {queryBallotAndGetWinner} from "./queryBallotAndGetWinner";
 
 function convertStringArrayToBytes32(array: string[]) {
   const bytes32Array = [];
@@ -42,7 +42,7 @@ async function main()
       100
     );
     
-    const ballotConractAddress = await deployBallotContract(
+    const ballotContractAddress = await deployBallotContract(
       ownerSigner, 
       tokenContractAddress, 
       proposals
@@ -52,26 +52,29 @@ async function main()
     //const ballotConractAddress = "0x1cf06F6eA98e48A08a4ccC2C3Dd02A08212a6F17";
     await voteForBallot(
       secondSigner, 
-      ballotConractAddress, 
+      ballotContractAddress, 
       1, 
       20
     );
 
     await voteForBallot(
       secondSigner, 
-      ballotConractAddress, 
+      ballotContractAddress, 
       2, 
       10
     );
 
     await voteForBallot(
       secondSigner, 
-      ballotConractAddress, 
+      ballotContractAddress, 
       0, 
       30
     );
 
-    //await queryBallotAndGetWinner(ownerSigner, ballotConractAddress);
+    await queryBallotAndGetWinner(
+      ownerSigner, 
+      ballotContractAddress
+    );
 
   }
   
