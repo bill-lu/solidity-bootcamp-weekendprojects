@@ -10,19 +10,32 @@ async function mintAndDelegateToken(
   ownerSigner: ethers.Wallet,
   mintAndDelegateToAddress: string,
   tokenAmount: number
-) {
-  const tokenContract = new Contract(
+) 
+{
+  const tokenContract: MyToken = new Contract(
     votingTokenAddress,
     TokenArtifact.abi,
     ownerSigner
   ) as MyToken;
+
   console.log(`minting tokens`);
-  let tx = await tokenContract.mint(mintAndDelegateToAddress, tokenAmount);
-  await tx.wait();
+  let tx = await tokenContract.mint(
+    ownerSigner.address, 
+    ethers.utils.parseEther(tokenAmount.toFixed(18))
+  );
+  await tx.wait(1);
+
   console.log(`minted ${tokenAmount} tokens`);
+  console.log("Mint transacton", tx.hash);
+
   console.log(`delegating tokens`);
-  tx = await tokenContract.delegate(mintAndDelegateToAddress);
+  tx = await tokenContract.delegate(
+    mintAndDelegateToAddress
+  );
+  await tx.wait(1);
+  
   console.log(`delegated tokens`);
+  console.log("Delegate transaction", tx.hash);
 }
 
 export { mintAndDelegateToken };
