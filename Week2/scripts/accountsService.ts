@@ -5,7 +5,7 @@ import "dotenv/config";
 // Do never expose your keys like this
 const EXPOSED_KEY = "8da4ef21b864d2cc526dbdb2a120bd2874c36c9d0a1fb7f8c63d7f7a8b41de8f";
 
-async function getSinger(
+async function getSigner(
     privateKey: string | undefined,
     mnemonic: string | undefined,
     network: string = "rinkeby"
@@ -36,6 +36,6 @@ async function getSinger(
     return accountAddress;
   }
 
-  export  {getSinger, getAccountAddress};
+  export  {getSigner, getAccountAddress};
 
 

@@ -1,4 +1,4 @@
-import {getSinger, getAccountAddress} from "./accountsService";
+import {getSigner, getAccountAddress} from "./accountsService";
 import {deployTokenContract} from "./1_deployTokenContrac";
 import {deployBallotContract} from "./2_deployBallotContract";
 import {mintAndDelegateToken} from "./3_tokenOperation";
@@ -20,13 +20,13 @@ function convertStringArrayToBytes32(array: string[]) {
 async function main() 
 {
   let proposals = ["Cake","Pizza","Soup","Beef"];
-    const ownerSigner = await getSinger(
+    const ownerSigner = await getSigner(
       process.env.PRIVATE_KEY_2,
       process.env.MNEMONIC,
       "rinkeby"
     );
 
-    const secondSigner = await getSinger(
+    const secondSigner = await getSigner(
       process.env.PRIVATE_KEY_1,
       process.env.MNEMONIC,
       "rinkeby"
