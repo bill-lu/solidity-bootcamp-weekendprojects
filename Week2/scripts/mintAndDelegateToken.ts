@@ -17,12 +17,9 @@ async function mintAndDelegateToken(
     ownerSigner
   ) as MyToken;
   console.log(`minting tokens`);
-  let tx = await tokenContract.mint(mintAndDelegateToAddress, tokenAmount);
+  const tx = await tokenContract.mint(mintAndDelegateToAddress, tokenAmount);
   await tx.wait();
   console.log(`minted ${tokenAmount} tokens`);
-  console.log(`delegating tokens`);
-  tx = await tokenContract.delegate(mintAndDelegateToAddress);
-  console.log(`delegated tokens`);
 }
 
 export { mintAndDelegateToken };
