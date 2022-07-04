@@ -10,13 +10,11 @@ async function voteForBallot(
     proposalVoteFor: number,
     votingPowerUsed: number) 
 {
-    console.log("Creating Ballot contract");
     const ballotContract: CustomBallot = new Contract(
       ballotContractAddress,
       ballotJson.abi,
       signer
     ) as CustomBallot;
-    console.log("Ballot contract created");
 
     /*
     console.log(`Getting voting power for ${signer.address} before vote`);

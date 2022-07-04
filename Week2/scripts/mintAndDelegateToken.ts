@@ -8,7 +8,7 @@ import { MyToken } from "../typechain";
 async function mintAndDelegateToken(
   votingTokenAddress: string,
   ownerSigner: ethers.Wallet,
-  mintAndDelegateToAddress: string,
+  delegateToAddress: string,
   tokenAmount: number
 ) 
 {
@@ -25,16 +25,16 @@ async function mintAndDelegateToken(
   );
   await tx.wait(1);
 
-  console.log(`minted ${tokenAmount} tokens`);
-  console.log("Mint transacton", tx.hash);
+  console.log(`minted ${tokenAmount} tokens to address ${ownerSigner.address}`);
+  console.log("Mint transacton ", tx.hash);
 
-  console.log(`delegating tokens`);
+  console.log(`delegating tokens to address ${delegateToAddress}`);
   tx = await tokenContract.delegate(
-    mintAndDelegateToAddress
+    delegateToAddress
   );
   await tx.wait(1);
   
-  console.log(`delegated tokens`);
+  console.log(`delegated tokens from ${ownerSigner.address} to ${delegateToAddress}`);
   console.log("Delegate transaction", tx.hash);
 }
 

@@ -13,9 +13,10 @@ async function queryBallotAndGetWinner(
     ballotJson.abi,
     signer
   )) as CustomBallot;
+
   console.log(`getting winner name`);
   const winnerName = await ballotContract.winnerName();
-  console.log(`winner name is ${winnerName}`);
+  console.log(`winner is: ${ethers.utils.parseBytes32String(winnerName)}`);
 }
 
 export { queryBallotAndGetWinner };

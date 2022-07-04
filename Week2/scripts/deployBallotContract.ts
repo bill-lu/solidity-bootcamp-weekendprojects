@@ -24,6 +24,13 @@ async function  deployBallotContract(
   if (balance < 0.01) {
     throw new Error("Not enough ether");
   }
+
+  console.log("Proposals: ");
+  if (proposals.length < 2) throw new Error("Not enough proposals provided");
+  proposals.forEach((element, index) => {
+    console.log(`Proposal N. ${index + 1}: ${element}`);
+  });
+  
   console.log("======Deploying Ballot contract======");
   
   const ballotFactory = new ethers.ContractFactory(
