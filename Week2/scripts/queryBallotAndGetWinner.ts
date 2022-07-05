@@ -8,11 +8,11 @@ async function queryBallotAndGetWinner(
   signer: ethers.Wallet,
   ballotContractAddress: string
 ) {
-  const ballotContract = (await new Contract(
+  const ballotContract = new Contract(
     ballotContractAddress,
     ballotJson.abi,
     signer
-  )) as CustomBallot;
+  ) as CustomBallot;
 
   console.log(`getting winner name`);
   const winnerName = await ballotContract.winnerName();
