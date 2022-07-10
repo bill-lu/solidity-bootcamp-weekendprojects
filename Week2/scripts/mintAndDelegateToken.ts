@@ -20,7 +20,7 @@ async function mintAndDelegateToken(
 
   console.log(`minting tokens`);
   let tx = await tokenContract.mint(
-    ownerSigner.address, 
+    ownerSigner.address,
     ethers.utils.parseEther(tokenAmount.toFixed(18))
   );
   await tx.wait(1);
