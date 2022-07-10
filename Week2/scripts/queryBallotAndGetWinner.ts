@@ -14,9 +14,15 @@ async function queryBallotAndGetWinner(
     signer
   ) as CustomBallot;
 
-  console.log(`getting winner name`);
-  const winnerName = await ballotContract.winnerName();
-  console.log(`winner is: ${ethers.utils.parseBytes32String(winnerName)}`);
+  console.log(`getting winner name -- using ballot contract at ${ballotContractAddress}`);
+  //const winnerName = await ballotContract.winnerName();
+  //console.log(`winner is: ${ethers.utils.parseBytes32String(winnerName)}`);
+
+  ballotContract.winnerName().then(
+    (name) => {
+      console.log(`winner is: ${ethers.utils.parseBytes32String(name)}`);
+    }
+  )
 }
 
 export { queryBallotAndGetWinner };
