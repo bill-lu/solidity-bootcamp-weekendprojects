@@ -1,7 +1,7 @@
 import { ethers, Signer } from "ethers";
 import "dotenv/config";
 import * as ballotJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
-import { CustomBallot } from "../typechain";
+import {CustomBallot} from "../typechain";
 
 function convertStringArrayToBytes32(array: string[]) {
   const bytes32Array = [];
@@ -11,11 +11,11 @@ function convertStringArrayToBytes32(array: string[]) {
   return bytes32Array;
 }
 
-async function deployBallotContract(
-  signerWallet: ethers.Wallet,
+async function  deployBallotContract( 
+  signerWallet: ethers.Wallet, 
   tokenConractAddress: string,
-  proposals: string[]
-) {
+  proposals: string[]) 
+{
   const provider = ethers.providers.getDefaultProvider("rinkeby");
   const signer = signerWallet.connect(provider);
   const balanceBN = await signer.getBalance();
@@ -30,20 +30,19 @@ async function deployBallotContract(
   proposals.forEach((element, index) => {
     console.log(`Proposal N. ${index + 1}: ${element}`);
   });
-
+  
   console.log("======Deploying Ballot contract======");
-
+  
   const ballotFactory = new ethers.ContractFactory(
     ballotJson.abi,
-    ballotJson.bytecode,
+    ballotJson.bytecode, 
     signer
   );
 
   const ballotContract = (await ballotFactory.deploy(
     convertStringArrayToBytes32(proposals),
-    tokenConractAddress
-  )) as CustomBallot;
-
+    tokenConractAddress)) as CustomBallot;
+  
   console.log("Awaiting confirmations");
   await ballotContract.deployed();
 
@@ -53,4 +52,4 @@ async function deployBallotContract(
   return ballotContract.address;
 }
 
-export { deployBallotContract };
+export {deployBallotContract};
