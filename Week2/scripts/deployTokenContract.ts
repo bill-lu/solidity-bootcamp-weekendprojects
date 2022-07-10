@@ -1,10 +1,9 @@
 import { ethers, Signer, Wallet } from "ethers";
 import "dotenv/config";
 import * as mytokenJson from "../artifacts/contracts/Token.sol/MyToken.json";
-import {MyToken, CustomBallot} from "../typechain";
+import { MyToken, CustomBallot } from "../typechain";
 
-async function deployTokenContract(signerWallet: Wallet) 
-{
+async function deployTokenContract(signerWallet: Wallet) {
   const provider = ethers.providers.getDefaultProvider("rinkeby");
   const signer = signerWallet.connect(provider);
   const balanceBN = await signer.getBalance();
@@ -20,14 +19,13 @@ async function deployTokenContract(signerWallet: Wallet)
     mytokenJson.bytecode,
     signer
   );
-  const tokenContract = (await tokenContractFactory.deploy()) as MyToken ;
+  const tokenContract = (await tokenContractFactory.deploy()) as MyToken;
   console.log("Awaiting confirmations");
   await tokenContract.deployed();
 
   console.log(`MyToken Contract deployed at ${tokenContract.address}`);
 
   return tokenContract.address;
-
 }
 
-export {deployTokenContract};
+export { deployTokenContract };
