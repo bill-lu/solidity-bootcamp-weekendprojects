@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract MyNFT is ERC721, AccessControl, ERC721Burnable {
+contract MyNFT is ERC721URIStorage, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor() ERC721("MyToken", "MTK") {
+    constructor() ERC721("Sandman", "SND") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
     }
 
-    function safeMint(address to, uint256 tokenId) public onlyRole(MINTER_ROLE) {
+    function safeMint(address to, uint256 tokenId) public {
         _safeMint(to, tokenId);
     }
 
