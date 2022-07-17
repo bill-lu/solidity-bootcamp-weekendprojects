@@ -12,7 +12,16 @@
 
 .nftHeader {
   font-size: calc(15px + 2vmin);
-  color:white
+  color:white;
+}
+
+h2 {
+  margin-bottom: 0px;
+}
+
+.Error {
+  font-size:20px;
+  color: red
 }
 
 .nftBody {

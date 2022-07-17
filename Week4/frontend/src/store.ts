@@ -4,7 +4,7 @@ import { ActionCreatorWithPayload, applyMiddleware, configureStore, createAction
 enum Validity {
   Valid, 
   Invalid,
-  Default
+  Default // when no query has been entered, the default NFT is shown
 }
 
 export interface NftState {
@@ -17,6 +17,7 @@ export interface NftState {
 export interface NftSearch {
   query: string,
   valid: Validity
+  error: string
 }
 
 const preloadedState: NftState = {
@@ -24,7 +25,8 @@ const preloadedState: NftState = {
     metadata: '{type: bored ape}',
     search: {
       query: '',
-      valid: Validity.Default
+      valid: Validity.Default,
+      error: ''
     },
     test: ''
 }
@@ -42,11 +44,13 @@ function searchNFT({getState, dispatch}) {
       // TODO
       console.log('make asynchronous database call');
       const query: string = action.payload;
+      const errorMsg = "";
       let validity: Validity = Validity.Valid;
 
       const nftSearchResult: NftSearch = {
         query: query,
-        valid: validity
+        valid: validity,
+        error: errorMsg
       }
       dispatch(setNftSearchResult(nftSearchResult));
       const metadata = 'TODO';
@@ -57,7 +61,7 @@ function searchNFT({getState, dispatch}) {
         dispatch(setNftImage(image));
       }
       else {
-        const defaultImage = 'TODO'        
+        const defaultImage = 'TODO'
         dispatch(setNftMetadata(''));        
         dispatch(setNftImage(defaultImage));
       }

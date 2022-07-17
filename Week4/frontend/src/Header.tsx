@@ -8,8 +8,8 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { useDispatch } from 'react-redux';
-import { setNftSearch } from './store';
+import { useDispatch, useSelector } from 'react-redux';
+import { NftState, setNftSearch } from './store';
 import { useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
@@ -54,6 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function SearchAppBar() {
   const [search, setSearch] = useState('');
+
   const dispatch = useDispatch();
 
   return (
@@ -82,7 +83,7 @@ export default function SearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Enter Token URI"
+              placeholder={"Enter Token URI"}
               inputProps={{ 'aria-label': 'search' }}
               onChange={(event) => setSearch(event.target.value)}
               onKeyDown={(event) => {
