@@ -3,7 +3,7 @@ import './index.css';
 import {Provider} from 'react-redux';
 import { store } from './store';
 
-import App from './App';
+import App from './Nft';
 import Header from './Header';
 
 const rootElement: HTMLElement | null = document.getElementById('root');

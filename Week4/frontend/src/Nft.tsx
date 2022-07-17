@@ -1,22 +1,27 @@
-import './App.css';
+import './Nft.css';
 import {useSelector} from 'react-redux'
 
 import { NftState } from './store';
 
-function App() {
+function Nft() {
   const imageUrl = useSelector((state: NftState) => state.image);
   const metadata = useSelector((state: NftState) => state.metadata);
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div className='nftHeader'>
+        <h2>Bored Ape</h2>
+      </div>
+      <header className="nftBody">
         <img src={imageUrl} className="App-logo" alt="logo" />
-        <p>
-          {metadata}        
-        </p>
+        <div className='metadataContainer'>
+          <ul>
+            <li>{metadata}</li>
+          </ul>
+        </div>
       </header>
     </div>
   );
 }
 
-export default App;
+export default Nft;
