@@ -7,3 +7,7 @@ typechain
 #Hardhat files
 cache
 artifacts
+
+#db and upload folders
+Week4/db
+Week4/upload
