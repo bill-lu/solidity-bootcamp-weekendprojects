@@ -76,6 +76,13 @@ export class AppService {
     return this.get(fileId);
   }
 
+  async getIpfsPath(fileId: number) {
+    const fileData: FileData = this.get(fileId);
+    if (!fileData.ipfs || !fileData.ipfs.path || fileData.ipfs.path.length == 0)
+      throw new Error('File not found');
+    return fileData.ipfs.path;
+  }
+
   async getFromIpfs(fileId: number) {
     const fileData: FileData = this.get(fileId);
     if (!fileData.ipfs || !fileData.ipfs.path || fileData.ipfs.path.length == 0)

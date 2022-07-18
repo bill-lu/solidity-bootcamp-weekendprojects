@@ -1,5 +1,6 @@
 // file: store.ts
 import { ActionCreatorWithPayload, applyMiddleware, configureStore, createAction, createReducer } from '@reduxjs/toolkit'
+import axios from 'axios';
 
 enum Validity {
   Valid, 
@@ -7,9 +8,19 @@ enum Validity {
   Default // when no query has been entered, the default NFT is shown
 }
 
+export interface NftMetadata {
+  name: string,
+  description: string,
+  author: string,
+  timestamp: number,
+  type: string,
+  class: string,
+  score: number
+}
+
 export interface NftState {
     image: string,
-    metadata: string,
+    metadata: NftMetadata,
     search: NftSearch,
     test: string
 }
@@ -20,9 +31,21 @@ export interface NftSearch {
   error: string
 }
 
+const SERVER_ADDRESS = 'http://localhost:5000'
+
+const defaultMetadata = {
+  "name": "",
+  "description": "",
+  "author": "",
+  "timestamp": 0,
+  "type": "",
+  "class": "",
+  "score": 0
+}
+
 const preloadedState: NftState = {
     image: 'https://www.thestreet.com/.image/t_share/MTgyMDU4MTA0Mzc5MTU1Nzg0/boredape.jpg',
-    metadata: '{type: bored ape}',
+    metadata: defaultMetadata,
     search: {
       query: '',
       valid: Validity.Default,
@@ -32,40 +55,45 @@ const preloadedState: NftState = {
 }
 
 export const setNftImage: ActionCreatorWithPayload<string, string> = createAction('nft/image');
-export const setNftMetadata: ActionCreatorWithPayload<string, string> = createAction('nft/metadata');
+export const setNftMetadata: ActionCreatorWithPayload<NftMetadata, string> = createAction('nft/metadata');
 export const setNftSearchResult: ActionCreatorWithPayload<NftSearch, string> = createAction('nft/searchResult');
 export const setNftSearch: ActionCreatorWithPayload<string, string> = createAction('nft/search');
 
-function searchNFT({getState, dispatch}) {
-  return next => action => {
-    console.log('will dispatch', action);
+function searchNFT() {
+  return next => async action => {
     if (action.type === setNftSearch.toString()) {
 
-      // TODO
-      console.log('make asynchronous database call');
+            
       const query: string = action.payload;
-      const errorMsg = "";
-      let validity: Validity = Validity.Valid;
 
-      const nftSearchResult: NftSearch = {
-        query: query,
-        valid: validity,
-        error: errorMsg
-      }
-      dispatch(setNftSearchResult(nftSearchResult));
-      const metadata = 'TODO';
-      const image = 'TODO'
-      if (validity === Validity.Valid) {
-
-        dispatch(setNftMetadata(metadata));        
-        dispatch(setNftImage(image));
-      }
-      else {
+      const fileAddress = `${SERVER_ADDRESS}/ipfs-get-path/${query}`;
+      const metadataAddress = `${SERVER_ADDRESS}/${query}`;
+      
+      let nftSearchResult: NftSearch;
+      try {
+        const fileResponse = await axios.get(fileAddress);
+        const metadataResponse = await axios.get(metadataAddress);
+    
+        nftSearchResult = {
+          query: query,
+          valid: Validity.Valid,
+          error: ''
+        }
+        const imagePath = `https://ipfs.io/ipfs/${fileResponse.data}/`
+        next(setNftImage(imagePath));        
+        next(setNftMetadata(metadataResponse.data.metadata));
+      } catch (error) {
+        nftSearchResult = {
+          query: query,
+          valid: Validity.Invalid,
+          error: `Try entering another index ${error.message}`
+        }        
         const defaultImage = 'TODO'
-        dispatch(setNftMetadata(''));        
-        dispatch(setNftImage(defaultImage));
+        next(setNftMetadata(defaultMetadata));        
+        next(setNftImage(defaultImage));
       }
-      return;
+      next(setNftSearchResult(nftSearchResult));
+
     }
   }
 }

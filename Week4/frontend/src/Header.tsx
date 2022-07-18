@@ -83,7 +83,7 @@ export default function SearchAppBar() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder={"Enter Token URI"}
+              placeholder={"Enter Token Index Starting at 0"}
               inputProps={{ 'aria-label': 'search' }}
               onChange={(event) => setSearch(event.target.value)}
               onKeyDown={(event) => {

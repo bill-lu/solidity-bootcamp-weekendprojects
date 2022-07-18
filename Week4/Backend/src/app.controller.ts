@@ -119,6 +119,33 @@ export class AppController {
     }
   }
 
+  @Get('ipfs-get-path/:id')
+  @ApiOperation({
+    summary: 'Get file path of element by id from ipfs',
+    description: 'Gets the file path of element at the requested index',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Element file path',
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'The server is not configured correctly',
+    type: HttpException,
+  })
+  async getFilePathIpfs(
+    @Response({ passthrough: true }) res,
+    @Param('id') id: number,
+  ) {
+    try {
+      const filePath = this.appService.getIpfsPath(id);
+      return filePath;
+    } catch (error) {
+      console.error(error);
+      throw new HttpException(error.message, 503);
+    }
+  }
+
   @Get('ipfs-get/:id')
   @ApiOperation({
     summary: 'Get file of element by id from ipfs',

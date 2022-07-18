@@ -16,7 +16,7 @@ function Nft() {
   return (
     <div className="App">
       <div className='nftHeader'>
-        <h2>{metadata}</h2>
+        <h2>{metadata.name}</h2>
       </div>
       <div className="Error">
         <p>{error}</p>
@@ -25,7 +25,13 @@ function Nft() {
         <img src={getImage()} className="App-logo" />
         <div className='metadataContainer'>
           <ul>
-            <li>{metadata}</li>
+            <li>name: {metadata.name}</li>
+            <li>description: {metadata.description}</li>
+            <li>author: {metadata.author}</li>
+            <li>timestamp: {metadata.timestamp}</li>
+            <li>type: {metadata.type}</li>
+            <li>class: {metadata.class}</li>
+            <li>score: {metadata.score}</li>
           </ul>
         </div>
       </header>
