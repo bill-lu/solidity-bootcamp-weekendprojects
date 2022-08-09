@@ -12,4 +12,5 @@
 * Write a report detailing the addresses, transaction hashes, description of the operation script being executed and console output from script execution for each step (Deployment, giving voting rights, casting/delegating and querying results).
 * (Extra) Use TDD methodology
 
+*test
 
