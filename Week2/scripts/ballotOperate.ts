@@ -22,7 +22,7 @@ async function voteForBallot(
     console.log(` Voting power before: ${ethers.utils.formatEther(votingPower)}`);
     */
 
-    console.log(`Voting for proposal ${proposalVoteFor}`);
+    console.log(`Voting for proposal ${proposalVoteFor}, using ballot contract at ${ballotContractAddress}`);
     const voteTx = await ballotContract.vote(proposalVoteFor, ethers.utils.parseEther(votingPowerUsed.toFixed(18)));
     console.log(`Voted for proposal ${proposalVoteFor} with ${votingPowerUsed} Token`, voteTx.hash);
   
